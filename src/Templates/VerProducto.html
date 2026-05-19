@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-3">
+
+    <h2 class="text-center text-primary">Lista de Productos</h2>
+
+    <div class="d-flex justify-content-center mt-4">
+        <div class="col-md-10 table-responsive">
+
+            <table class="table table-bordered">
+                <thead class="thead-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Código</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaProductos"></tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+// 📌 Base de datos simulada
+let productos = [
+    {id: 1, nombre: "Laptop", precio: 2500000, stock: 5, codigo: "P001"},
+    {id: 2, nombre: "Mouse", precio: 50000, stock: 20, codigo: "P002"},
+    {id: 3, nombre: "Teclado", precio: 80000, stock: 10, codigo: "P003"}
+];
+
+// 📌 Mostrar productos
+function mostrarProductos(){
+
+    let tabla = document.getElementById("tablaProductos");
+    tabla.innerHTML = "";
+
+    productos.forEach((producto, index) => {
+
+        let fila = `
+            <tr>
+                <td>${producto.id}</td>
+                <td>${producto.nombre}</td>
+                <td>${producto.precio}</td>
+                <td>${producto.stock}</td>
+                <td>${producto.codigo}</td>
+                <td class="text-center">
+                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${index})">
+                        Eliminar
+                    </button>
+                </td>
+            </tr>
+        `;
+
+        tabla.innerHTML += fila;
+
+    });
+}
+
+// 📌 Eliminar producto
+function eliminarProducto(index){
+
+    let confirmar = confirm("¿Seguro que deseas eliminar este producto?");
+
+    if(confirmar){
+        productos.splice(index, 1); // elimina del array
+        mostrarProductos(); // refresca la tabla
+    }
+}
+
+// 📌 Inicializar
+mostrarProductos();
+
+</script>
+
+{% endblock content %}

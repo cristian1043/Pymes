@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <form>
+    <div class="form-row">
+      <div class="form-group col-md-4" style=" margin-left: 20px;">
+        <label for="inputPassword4">Nombre</label>
+        <input type="text" class="form-control" id="inputPassword4" placeholder="Nombre completo">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="inputEmail4">Email</label>
+        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      </div>
+      
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputTypeId">Tipo de Documento</label>
+      <input type="text" class="form-control" id="inputTypeId" placeholder="Tipo de documento">
+    </div>
+    <div class="form-group col-md-3">
+      <label for="inputAddress2">Id Cliente</label>
+      <select type="number" class="form-control" id="inputIdCliente" placeholder="ID del cliente">
+        <option selected>Escoja..</option>
+        <option>C.C.</option>
+        <option>T.I.</option>
+        <option>C.E.</option>
+      </select> </option>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3" style="margin-left: 20px;">
+        <label for="inputCity">Ciudad</label>
+        <input type="text" class="form-control" id="inputCiudad" placeholder="Ciudad">
+      </div>
+      <div class="form-group col-md-2  -right 40px">
+        <label for="inputState">Estado</label>
+        <select id="inputState" class="form-control">
+          <option selected>Escoja...</option>
+          <option>Activo</option>
+          <option>Inactivo</option>
+          <option>Pendiente</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-left: 20px;">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="gridCheck">
+        <label class="form-check-label" for="gridCheck">
+          Verificar que los datos sean correctos antes de guardar
+        </label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Guardar</button>
+  </form>
+
+{% endblock content %}

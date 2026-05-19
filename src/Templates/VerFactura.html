@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h3>Facturas</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla"></tbody>
+    </table>
+</div>
+
+<script>
+let facturas = JSON.parse(localStorage.getItem("facturas")) || [];
+
+function mostrar(){
+    let tabla = document.getElementById("tabla");
+    tabla.innerHTML = "";
+
+    facturas.forEach((f, i) => {
+
+        let acciones = `<button class="btn btn-info btn-sm" onclick="ver(${i})">Ver</button> `;
+
+        if(f.estado === "Borrador"){
+            acciones += `<button class="btn btn-success btn-sm" onclick="emitir(${i})">Emitir</button>`;
+        }
+
+        if(f.estado === "Emitida"){
+            acciones += `<button class="btn btn-danger btn-sm" onclick="anular(${i})">Anular</button>`;
+        }
+
+        tabla.innerHTML += `
+        <tr>
+            <td>${f.id}</td>
+            <td>${f.cliente}</td>
+            <td>${f.total}</td>
+            <td>${f.estado}</td>
+            <td>${acciones}</td>
+        </tr>`;
+    });
+}
+
+function emitir(i){
+    facturas[i].estado = "Emitida";
+    localStorage.setItem("facturas", JSON.stringify(facturas));
+    mostrar();
+}
+
+function anular(i){
+    facturas[i].estado = "Anulada";
+    localStorage.setItem("facturas", JSON.stringify(facturas));
+    mostrar();
+}
+
+function ver(i){
+    localStorage.setItem("facturaSeleccionada", i);
+    window.location.href = "Detalle_Factura";
+}
+
+mostrar();
+</script>
+
+{% endblock content %}

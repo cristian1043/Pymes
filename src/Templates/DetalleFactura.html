@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Detalle de Factura</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="detalle"></tbody>
+    </table>
+
+    <a href="Ver_Factura" class="btn btn-secondary">Volver</a>
+</div>
+
+<script>
+let facturas = JSON.parse(localStorage.getItem("facturas")) || [];
+let index = localStorage.getItem("facturaSeleccionada");
+
+let detalle = facturas[index].detalle;
+
+let tabla = document.getElementById("detalle");
+
+detalle.forEach(d => {
+    tabla.innerHTML += `
+        <tr>
+            <td>${d.producto}</td>
+            <td>${d.cantidad}</td>
+            <td>${d.precio}</td>
+            <td>${d.subtotal}</td>
+        </tr>
+    `;
+});
+</script>
+{% endblock content %}

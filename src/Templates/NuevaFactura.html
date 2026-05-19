@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+    <h3>Nueva Factura</h3>
+
+    <input type="text" id="cliente" class="form-control mb-2" placeholder="Cliente">
+
+    <h5>Agregar Producto</h5>
+    <input type="text" id="producto" class="form-control mb-2" placeholder="Producto">
+    <input type="number" id="cantidad" class="form-control mb-2" placeholder="Cantidad">
+    <input type="number" id="precio" class="form-control mb-2" placeholder="Precio">
+
+    <button class="btn btn-primary mb-3" onclick="agregarProducto()">Agregar</button>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="detalle"></tbody>
+    </table>
+
+    <h4>Total: $<span id="total">0</span></h4>
+
+    <button class="btn btn-success" onclick="guardarFactura()">Guardar</button>
+</div>
+
+<script>
+let detalle = [];
+let total = 0;
+
+function agregarProducto(){
+    let producto = document.getElementById("producto").value;
+    let cantidad = parseInt(document.getElementById("cantidad").value);
+    let precio = parseFloat(document.getElementById("precio").value);
+
+    let subtotal = cantidad * precio;
+
+    detalle.push({producto, cantidad, precio, subtotal});
+    total += subtotal;
+
+    mostrarDetalle();
+}
+
+function mostrarDetalle(){
+    let tabla = document.getElementById("detalle");
+    tabla.innerHTML = "";
+
+    detalle.forEach(d => {
+        tabla.innerHTML += `
+            <tr>
+                <td>${d.producto}</td>
+                <td>${d.cantidad}</td>
+                <td>${d.precio}</td>
+                <td>${d.subtotal}</td>
+            </tr>
+        `;
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+function guardarFactura(){
+    let cliente = document.getElementById("cliente").value;
+
+    let facturas = JSON.parse(localStorage.getItem("facturas")) || [];
+
+    facturas.push({
+        id: facturas.length + 1,
+        cliente,
+        total,
+        estado: "Borrador",
+        detalle
+    });
+
+    localStorage.setItem("facturas", JSON.stringify(facturas));
+
+    alert("Factura guardada");
+    window.location.href = "Ver_Factura";
+}
+</script>
+
+{% endblock content %}
